@@ -1,5 +1,5 @@
 [build]
-  publish = "weather"
+  publish = "."
 
 [[headers]]
   for = "/*"

@@ -4,7 +4,7 @@ Hi, I'm a senior at FAU studying computer science. I am excited to learn about m
 
 ## Weather app
 
-A static weather app in [`weather/`](weather/) powered by the free [Open-Meteo](https://open-meteo.com/) API (no API key needed). It defaults to **Boca Raton, FL** and includes:
+A static weather app (`index.html`, `style.css`, `app.js`) powered by the free [Open-Meteo](https://open-meteo.com/) API (no API key needed). It defaults to **Boca Raton, FL** and includes:
 
 - Current conditions, feels-like, humidity, wind, rain chance, UV index, sunrise/sunset
 - 24-hour and 7-day forecasts
@@ -12,11 +12,11 @@ A static weather app in [`weather/`](weather/) powered by the free [Open-Meteo](
 
 ### Run locally
 
-Open `weather/index.html` in a browser, or serve the folder: `npx serve weather`.
+Open `index.html` in a browser, or serve the folder: `npx serve .`.
 
 ### Deploy to Netlify
 
-`netlify.toml` publishes the `weather/` folder with no build step. Either:
+`netlify.toml` publishes the repo root with no build step. Either:
 
-- **Git:** in Netlify, "Add new site → Import an existing project", pick this repo and branch. The settings in `netlify.toml` are picked up automatically.
-- **Drag & drop:** drag the `weather/` folder onto https://app.netlify.com/drop.
+- **Git:** in Netlify, "Add new site → Import an existing project", pick this repo and the `main` branch. The settings in `netlify.toml` are picked up automatically.
+- **Drag & drop:** drag this whole folder onto https://app.netlify.com/drop.
