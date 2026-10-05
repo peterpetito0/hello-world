@@ -10,6 +10,12 @@ A static weather app (`index.html`, `style.css`, `app.js`) powered by the free [
 - 24-hour and 7-day forecasts
 - City search (Open-Meteo geocoding), "use my location", and a °F/°C toggle (remembered in the browser)
 
+### Login
+
+The forecast is only shown after signing in with an email and password. Accounts are handled by [Supabase Auth](https://supabase.com/docs/guides/auth/passwords); the project URL and publishable key are the two `SUPABASE_` constants in `app.js`.
+
+New accounts get a confirmation email. For its link to come back to the app, set **Authentication → URL Configuration → Site URL** in the Supabase dashboard to the address the app is served from.
+
 ### Run locally
 
 Open `index.html` in a browser, or serve the folder: `npx serve .`.
