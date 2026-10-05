@@ -37,6 +37,8 @@ a { color: var(--accent); }
 [hidden] { display: none !important; }
 
 .app { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; display: grid; gap: 16px; }
+/* Let the hourly strip scroll inside its card instead of stretching the whole page. */
+.app > * { min-width: 0; }
 
 .top { display: flex; gap: 8px; }
 .search { position: relative; flex: 1; }
