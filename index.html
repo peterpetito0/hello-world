@@ -9,7 +9,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
+  <section id="auth" class="app auth" hidden>
+    <form id="auth-form" class="card auth-form">
+      <h1>⛅ Weather</h1>
+      <p class="muted">Sign in with your email to see the forecast.</p>
+      <label>Email
+        <input id="email" type="email" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input id="password" type="password" autocomplete="current-password" minlength="6" required>
+      </label>
+      <button id="signin" type="submit" class="primary">Sign in</button>
+      <button id="signup" type="button">Create account</button>
+      <p id="auth-msg" class="status" role="status"></p>
+    </form>
+  </section>
+
+  <main id="weather" class="app" hidden>
     <header class="top">
       <form id="search" class="search" autocomplete="off" role="search">
         <input id="query" type="search" placeholder="Search a city…" aria-label="Search a city">
@@ -18,6 +34,7 @@
       <div class="controls">
         <button id="locate" type="button" title="Use my location" aria-label="Use my location">📍</button>
         <button id="unit" type="button" title="Toggle units" aria-label="Toggle units">°F</button>
+        <button id="signout" type="button" title="Sign out">Sign out</button>
       </div>
     </header>
 
@@ -56,6 +73,7 @@
 
     <footer class="muted">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></footer>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 </body>
 </html>

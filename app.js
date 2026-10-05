@@ -308,4 +308,73 @@ $('locate').addEventListener('click', () => {
   );
 });
 
-load();
+// ---- Login (Supabase email + password) ----
+const SUPABASE_URL = 'https://srbyuirrcouyrxkynqhd.supabase.co';
+// Publishable key: it is meant to be shipped in browser code.
+const SUPABASE_KEY = 'sb_publishable_DtUXm7nBRlxDlkUt8gGyxw_3VSdMHxz';
+
+function setAuthMessage(message, isError = false) {
+  const el = $('auth-msg');
+  el.textContent = message;
+  el.classList.toggle('error', isError);
+}
+
+let signedInUser = null;
+
+// Show the login card when signed out and the weather when signed in.
+function showSession(session) {
+  const userId = session ? session.user.id : null;
+  $('auth').hidden = Boolean(userId);
+  $('weather').hidden = !userId;
+  if (userId) {
+    $('signout').title = `Sign out ${session.user.email}`;
+    $('password').value = '';
+    setAuthMessage('');
+    if (userId !== signedInUser) load(); // skip reloads on token refresh
+  }
+  signedInUser = userId;
+}
+
+function startAuth() {
+  if (!window.supabase) {
+    $('auth').hidden = false;
+    setAuthMessage('Could not load the login service. Check your connection and reload.', true);
+    return;
+  }
+  const { auth } = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Fires once on page load with the saved session (or null), then on every sign in / sign out.
+  auth.onAuthStateChange((_event, session) => showSession(session));
+
+  async function submit(mode) {
+    const form = $('auth-form');
+    if (!form.reportValidity()) return;
+    const email = $('email').value.trim();
+    const password = $('password').value;
+    const buttons = [$('signin'), $('signup')];
+    buttons.forEach((b) => { b.disabled = true; });
+    setAuthMessage(mode === 'signup' ? 'Creating account…' : 'Signing in…');
+    try {
+      const { data, error } = mode === 'signup'
+        ? await auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: window.location.origin + window.location.pathname },
+        })
+        : await auth.signInWithPassword({ email, password });
+      if (error) setAuthMessage(error.message, true);
+      else if (!data.session) setAuthMessage('Check your email for a confirmation link, then sign in.');
+    } catch (err) {
+      console.error(err);
+      setAuthMessage('Could not reach the login service. Try again.', true);
+    } finally {
+      buttons.forEach((b) => { b.disabled = false; });
+    }
+  }
+
+  $('auth-form').addEventListener('submit', (e) => { e.preventDefault(); submit('signin'); });
+  $('signup').addEventListener('click', () => submit('signup'));
+  $('signout').addEventListener('click', () => auth.signOut());
+}
+
+startAuth();
